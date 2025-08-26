@@ -41,6 +41,7 @@ export interface ApiResult<T> {
 // };
 export type SearchBoxProps = {
  setWeatherInfo: Dispatch<SetStateAction<WeatherResponse | null>>;
+ setIsLoading: Dispatch<SetStateAction<boolean>>;
 };
 
 export interface WeatherUnits {

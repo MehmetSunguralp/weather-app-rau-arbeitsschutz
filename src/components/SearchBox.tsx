@@ -4,7 +4,7 @@ import type { PlaceDetail, SearchBoxProps } from '../types/types';
 import { Box, TextField, List, ListItem, ListItemButton, Paper, InputAdornment } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 
-export const SearchBox = ({ setWeatherInfo }: SearchBoxProps) => {
+export const SearchBox = ({ setWeatherInfo, setIsLoading }: SearchBoxProps) => {
  const [query, setQuery] = useState<string>('');
  const [places, setPlaces] = useState<PlaceDetail[]>([]);
  const [currentPlace, setCurrentPlace] = useState<string>('');
@@ -15,6 +15,7 @@ export const SearchBox = ({ setWeatherInfo }: SearchBoxProps) => {
    if (query.length >= 2) {
     const placesResponse = await getPlaceByKeyword(query);
     setPlaces(placesResponse.state === 'success' && placesResponse.data?.length ? placesResponse.data : []);
+    setIsLoading(false);
    } else {
     setPlaces([]);
    }
@@ -34,9 +35,13 @@ export const SearchBox = ({ setWeatherInfo }: SearchBoxProps) => {
  }, []);
 
  const handleSelectPlace = async (place: PlaceDetail) => {
+  setIsLoading(true);
   const weatherResponse = await getWeatherByCoords(place.latitude, place.longitude);
   if (weatherResponse.state === 'success' && weatherResponse.data) {
    setWeatherInfo(weatherResponse.data);
+   setIsLoading(false);
+  } else {
+   setIsLoading(false);
   }
   setPlaces([]);
   setQuery('');
@@ -49,28 +54,39 @@ export const SearchBox = ({ setWeatherInfo }: SearchBoxProps) => {
  };
 
  return (
-  <Box ref={containerRef} className="flex flex-col items-center relative w-full max-w-md">
+  <Box ref={containerRef} className="flex flex-col items-center relative w-full max-w-md z-10">
    <TextField
     placeholder={currentPlace || 'Stadt suchen...'}
     value={query}
     onChange={handleInputChange}
     fullWidth
+    autoComplete="off"
     className="shadow-[inset_0_2px_4px_rgba(0,0,0,0.2)]"
     sx={{
      borderRadius: '50px',
+     backgroundColor: 'rgba(0, 0, 0, 0.4)',
      outline: 'none',
      '& .MuiOutlinedInput-root': {
       borderRadius: '50px',
-      '&.Mui-focused fieldset': {
+      color: 'rgba(255,255,255,0.9)', // input text color
+      '& .MuiOutlinedInput-notchedOutline': {
        borderColor: 'transparent',
-       boxShadow: 'none',
+      },
+      '&.Mui-focused': {
+       '& .MuiOutlinedInput-notchedOutline': {
+        borderColor: 'transparent',
+       },
+      },
+      '& input::placeholder': {
+       color: 'rgba(255, 255, 255, 0.6)', // placeholder color
+       opacity: 1,
       },
      },
     }}
     InputProps={{
      endAdornment: (
       <InputAdornment position="start">
-       <SearchIcon fontSize="large" />
+       <SearchIcon fontSize="large" sx={{ color: 'rgba(255, 255, 255)' }} />
       </InputAdornment>
      ),
     }}
