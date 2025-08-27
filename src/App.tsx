@@ -11,8 +11,8 @@ export const App = () => {
  const { bgImage, handleBgChange } = useBackground();
 
  useEffect(() => {
+  if (weatherInfo?.current.weather_code) handleBgChange(weatherInfo?.current.weather_code);
   console.log(weatherInfo);
-  handleBgChange(5);
  }, [weatherInfo, isLoading]);
 
  return (
@@ -24,7 +24,6 @@ export const App = () => {
     className="w-full max-w-[1280px] mx-auto flex flex-col justify-center items-center min-h-screen"
     sx={{
      backgroundColor: 'rgba(0, 0, 0, 0.6)',
-     borderRadius: 2,
      boxShadow: 3,
      p: 4,
     }}

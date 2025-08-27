@@ -1,12 +1,10 @@
 import type { Dispatch, SetStateAction } from 'react';
-
 export interface Place {
  name: string;
  latitude: number;
  longitude: number;
  country: string;
 }
-
 export interface PlaceDetail {
  id: number;
  name: string;
@@ -29,21 +27,16 @@ export interface PlaceDetail {
  admin3: string;
  admin4: string;
 }
-
 export interface ApiResult<T> {
  state: 'success' | 'error' | '';
  data: T | null;
  message: string;
 }
 
-// export type SearchBoxProps = {
-//  setWeatherInfo: Dispatch<SetStateAction<WeatherResponse | {}>>;
-// };
 export type SearchBoxProps = {
  setWeatherInfo: Dispatch<SetStateAction<WeatherResponse | null>>;
  setIsLoading: Dispatch<SetStateAction<boolean>>;
 };
-
 export interface WeatherUnits {
  time: string;
  interval?: string;
@@ -52,19 +45,19 @@ export interface WeatherUnits {
 }
 
 export interface CurrentWeather {
- time: string; // ISO string
+ time: string;
  interval: number;
  temperature_2m: number;
  weather_code: number;
+ is_day: number;
 }
-
 export interface HourlyWeather {
  time: string[];
  temperature_2m: number[];
  weather_code: number[];
 }
-
 export interface WeatherResponse {
+ placeName: string;
  latitude: number;
  longitude: number;
  generationtime_ms: number;

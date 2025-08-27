@@ -3,6 +3,7 @@ import { getPlaceByKeyword, getWeatherByCoords } from '../api/apiCalls';
 import type { PlaceDetail, SearchBoxProps } from '../types/types';
 import { Box, TextField, List, ListItem, ListItemButton, Paper, InputAdornment } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
+import { weatherIcons } from '../utils/localAssets';
 
 export const SearchBox = ({ setWeatherInfo, setIsLoading }: SearchBoxProps) => {
  const [query, setQuery] = useState<string>('');
@@ -11,15 +12,22 @@ export const SearchBox = ({ setWeatherInfo, setIsLoading }: SearchBoxProps) => {
  const containerRef = useRef<HTMLDivElement>(null);
 
  useEffect(() => {
-  const fetchPlaces = async () => {
-   if (query.length >= 2) {
-    const placesResponse = await getPlaceByKeyword(query);
-    setPlaces(placesResponse.state === 'success' && placesResponse.data?.length ? placesResponse.data : []);
-    setIsLoading(false);
+  navigator.geolocation.getCurrentPosition(async (position) => {
+   const { latitude, longitude } = position.coords;
+   if (latitude && longitude) {
+    setIsLoading(true);
+    const weatherResponse = await getWeatherByCoords(latitude, longitude);
+    if (weatherResponse.state == 'success') {
+     setWeatherInfo(weatherResponse.data);
+     setIsLoading(false);
+    }
    } else {
-    setPlaces([]);
+    setIsLoading(false);
    }
-  };
+  });
+ }, []);
+
+ useEffect(() => {
   const timeout = setTimeout(fetchPlaces, 300);
   return () => clearTimeout(timeout);
  }, [query]);
@@ -34,11 +42,25 @@ export const SearchBox = ({ setWeatherInfo, setIsLoading }: SearchBoxProps) => {
   return () => document.removeEventListener('mousedown', handleClickOutside);
  }, []);
 
+ const fetchPlaces = async () => {
+  if (query.length >= 2) {
+   const placesResponse = await getPlaceByKeyword(query);
+   setPlaces(placesResponse.state === 'success' && placesResponse.data?.length ? placesResponse.data : []);
+   setIsLoading(false);
+  } else {
+   setPlaces([]);
+  }
+ };
+
  const handleSelectPlace = async (place: PlaceDetail) => {
   setIsLoading(true);
   const weatherResponse = await getWeatherByCoords(place.latitude, place.longitude);
   if (weatherResponse.state === 'success' && weatherResponse.data) {
-   setWeatherInfo(weatherResponse.data);
+   const enrichedWeatherInfo = {
+    ...weatherResponse.data,
+    placeName: place.name,
+   };
+   setWeatherInfo(enrichedWeatherInfo);
    setIsLoading(false);
   } else {
    setIsLoading(false);
@@ -68,7 +90,7 @@ export const SearchBox = ({ setWeatherInfo, setIsLoading }: SearchBoxProps) => {
      outline: 'none',
      '& .MuiOutlinedInput-root': {
       borderRadius: '50px',
-      color: 'rgba(255,255,255,0.9)', // input text color
+      color: 'rgba(255,255,255,0.9)',
       '& .MuiOutlinedInput-notchedOutline': {
        borderColor: 'transparent',
       },
@@ -78,7 +100,7 @@ export const SearchBox = ({ setWeatherInfo, setIsLoading }: SearchBoxProps) => {
        },
       },
       '& input::placeholder': {
-       color: 'rgba(255, 255, 255, 0.6)', // placeholder color
+       color: 'rgba(255, 255, 255, 0.6)',
        opacity: 1,
       },
      },
@@ -115,6 +137,7 @@ export const SearchBox = ({ setWeatherInfo, setIsLoading }: SearchBoxProps) => {
      </List>
     </Paper>
    )}
+   <Box component={'img'} src={weatherIcons.sunny} />
   </Box>
  );
 };
