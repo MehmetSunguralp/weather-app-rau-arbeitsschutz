@@ -3,6 +3,7 @@ import { SearchBox } from './components/SearchBox';
 import type { WeatherResponse } from './types/types';
 import { Backdrop, Box, CircularProgress } from '@mui/material';
 import { useBackground } from './hooks/useBackground';
+import { Hero } from './components/Hero';
 
 export const App = () => {
  const [weatherInfo, setWeatherInfo] = useState<WeatherResponse | null>(null);
@@ -29,6 +30,7 @@ export const App = () => {
     }}
    >
     <SearchBox setWeatherInfo={setWeatherInfo} setIsLoading={setIsLoading} />
+    <Hero weatherInfo={weatherInfo} />
    </Box>
   </Box>
  );

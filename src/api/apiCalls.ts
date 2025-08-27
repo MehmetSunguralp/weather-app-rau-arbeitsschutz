@@ -53,7 +53,7 @@ export const getWeatherByCoords = async (lat: number, lon: number): Promise<ApiR
    params: {
     latitude: lat,
     longitude: lon,
-    current: 'temperature_2m,weather_code,is_day',
+    current: 'temperature_2m,weather_code,is_day,wind_speed_10m,relative_humidity_2m',
     hourly: 'temperature_2m,weather_code',
     daily: 'weathercode,temperature_2m_max,temperature_2m_min,precipitation_sum',
    },
