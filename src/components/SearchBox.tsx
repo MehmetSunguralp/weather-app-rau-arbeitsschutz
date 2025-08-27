@@ -3,7 +3,6 @@ import { getPlaceByKeyword, getWeatherByCoords } from '../api/apiCalls';
 import type { PlaceDetail, SearchBoxProps } from '../types/types';
 import { Box, TextField, List, ListItem, ListItemButton, Paper, InputAdornment } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
-import { weatherIcons } from '../utils/localAssets';
 
 export const SearchBox = ({ setWeatherInfo, setIsLoading }: SearchBoxProps) => {
  const [query, setQuery] = useState<string>('');
@@ -137,7 +136,6 @@ export const SearchBox = ({ setWeatherInfo, setIsLoading }: SearchBoxProps) => {
      </List>
     </Paper>
    )}
-   <Box component={'img'} src={weatherIcons.sunny} />
   </Box>
  );
 };
