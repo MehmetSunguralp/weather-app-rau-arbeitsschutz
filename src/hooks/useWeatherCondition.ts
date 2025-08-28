@@ -1,51 +1,34 @@
-import { useState } from 'react';
-
 export const useWeatherCondition = () => {
- const [weatherCondition, setWeatherCondition] = useState<string | null>(null);
-
- const handleWeatherConditionChange = (code: number): void => {
+ const getWeatherCondition = (code: number): string => {
   switch (true) {
    case code === 0:
-    setWeatherCondition('Sonnig');
-    return;
+    return 'Sonnig';
    case code === 1:
-    setWeatherCondition('Überwiegend klar');
-    return;
+    return 'Überwiegend klar';
    case code === 2:
-    setWeatherCondition('Teilweise bewölkt');
-    return;
+    return 'Teilweise bewölkt';
    case code === 3:
-    setWeatherCondition('Bedeckt');
-    return;
+    return 'Bedeckt';
    case code === 45 || code === 48:
-    setWeatherCondition('Nebel');
-    return;
+    return 'Nebel';
    case code >= 51 && code <= 57:
-    setWeatherCondition('Nieselregen');
-    return;
+    return 'Nieselregen';
    case code >= 61 && code <= 67:
-    setWeatherCondition('Regen');
-    return;
+    return 'Regen';
    case code >= 71 && code <= 77:
-    setWeatherCondition('Schnee');
-    return;
+    return 'Schnee';
    case code >= 80 && code <= 82:
-    setWeatherCondition('Regenschauer');
-    return;
+    return 'Regenschauer';
    case code >= 85 && code <= 86:
-    setWeatherCondition('Schneeschauer');
-    return;
+    return 'Schneeschauer';
    case code === 95:
-    setWeatherCondition('Gewitter');
-    return;
+    return 'Gewitter';
    case code >= 96 && code <= 99:
-    setWeatherCondition('Gewitter mit Hagel');
-    return;
+    return 'Gewitter mit Hagel';
    default:
-    setWeatherCondition('Unbekannt');
-    return;
+    return 'Unbekannt';
   }
  };
 
- return { weatherCondition, handleWeatherConditionChange };
+ return { getWeatherCondition };
 };

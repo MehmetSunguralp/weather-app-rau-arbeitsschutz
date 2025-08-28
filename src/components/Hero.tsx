@@ -6,19 +6,21 @@ import { useWeatherCondition } from '../hooks/useWeatherCondition';
 
 export const Hero = ({ weatherInfo }: { weatherInfo: WeatherResponse | null }) => {
  const [unit, setUnit] = useState<'celcius' | 'fahrenheit'>('celcius');
- const { weatherIcon, handleWeatherIconChange } = useWeatherIcon();
- const { weatherCondition, handleWeatherConditionChange } = useWeatherCondition();
+ const [weatherIcon, setWeatherIcon] = useState<string | null>(null);
+ const [weatherCondition, setWeatherCondition] = useState<string | null>(null);
+ const { getWeatherIcon } = useWeatherIcon();
+ const { getWeatherCondition } = useWeatherCondition();
 
  useEffect(() => {
   if (weatherInfo) {
-   handleWeatherIconChange(weatherInfo.current.weather_code);
-   handleWeatherConditionChange(weatherInfo.current.weather_code);
+   setWeatherIcon(getWeatherIcon(weatherInfo.current.weather_code));
+   setWeatherCondition(getWeatherCondition(weatherInfo.current.weather_code));
   }
  }, [weatherInfo]);
 
  return (
   <Box
-   className="mt-4 flex flex-col text-center justify-center rounded-3xl p-4"
+   className="mt-4 flex flex-col text-center justify-center rounded-3xl px-16 py-4 shadow-[inset_0_2px_4px_rgba(0,0,0,0.2)]"
    sx={{ backgroundColor: 'rgba(0, 0, 0, 0.2)' }}
   >
    <Typography variant="h4">{weatherInfo?.placeName}</Typography>

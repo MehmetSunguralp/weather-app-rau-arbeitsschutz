@@ -77,7 +77,7 @@ export const SearchBox = ({ setWeatherInfo, setIsLoading }: SearchBoxProps) => {
  return (
   <Box ref={containerRef} className="flex flex-col items-center relative w-full max-w-md z-10">
    <TextField
-    placeholder={currentPlace || 'Stadt suchen...'}
+    placeholder={'Stadt suchen...'}
     value={query}
     onChange={handleInputChange}
     fullWidth
@@ -86,7 +86,6 @@ export const SearchBox = ({ setWeatherInfo, setIsLoading }: SearchBoxProps) => {
     sx={{
      borderRadius: '50px',
      backgroundColor: 'rgba(0, 0, 0, 0.4)',
-     outline: 'none',
      '& .MuiOutlinedInput-root': {
       borderRadius: '50px',
       color: 'rgba(255,255,255,0.9)',
@@ -94,6 +93,11 @@ export const SearchBox = ({ setWeatherInfo, setIsLoading }: SearchBoxProps) => {
        borderColor: 'transparent',
       },
       '&.Mui-focused': {
+       '& .MuiOutlinedInput-notchedOutline': {
+        borderColor: 'transparent',
+       },
+      },
+      '&.Mui-hover': {
        '& .MuiOutlinedInput-notchedOutline': {
         borderColor: 'transparent',
        },

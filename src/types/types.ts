@@ -58,6 +58,20 @@ export interface HourlyWeather {
  temperature_2m: number[];
  weather_code: number[];
 }
+export interface DailyWeather {
+ time: string[];
+ weathercode: number[];
+ temperature_2m_max: number[];
+ temperature_2m_min: number[];
+ precipitation_sum: number[];
+}
+export interface DailyUnits {
+ time: string;
+ weathercode: string;
+ temperature_2m_max: string;
+ temperature_2m_min: string;
+ precipitation_sum: string;
+}
 export interface WeatherResponse {
  placeName: string;
  latitude: number;
@@ -71,4 +85,6 @@ export interface WeatherResponse {
  current: CurrentWeather;
  hourly_units: WeatherUnits;
  hourly: HourlyWeather;
+ daily_units: DailyUnits;
+ daily: DailyWeather;
 }

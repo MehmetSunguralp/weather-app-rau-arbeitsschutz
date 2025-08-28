@@ -1,52 +1,36 @@
-import { useState } from 'react';
 import { weatherIcons } from '../utils/localAssets';
 
 export const useWeatherIcon = () => {
- const [weatherIcon, setWeatherIcon] = useState<string | null>(null);
-
- const handleWeatherIconChange = (code: number): void => {
+ const getWeatherIcon = (code: number): string | null => {
   switch (true) {
    case code === 0:
-    setWeatherIcon(weatherIcons.sunny);
-    return;
+    return weatherIcons.sunny;
    case code === 1:
-    setWeatherIcon(weatherIcons.mainlyClear);
-    return;
+    return weatherIcons.mainlyClear;
    case code === 2:
-    setWeatherIcon(weatherIcons.partlyCloudy);
-    return;
+    return weatherIcons.partlyCloudy;
    case code === 3:
-    setWeatherIcon(weatherIcons.overcast);
-    return;
+    return weatherIcons.overcast;
    case code === 45 || code === 48:
-    setWeatherIcon(weatherIcons.fog);
-    return;
+    return weatherIcons.fog;
    case code >= 51 && code <= 57:
-    setWeatherIcon(weatherIcons.drizzle);
-    return;
+    return weatherIcons.drizzle;
    case code >= 61 && code <= 67:
-    setWeatherIcon(weatherIcons.rain);
-    return;
+    return weatherIcons.rain;
    case code >= 71 && code <= 77:
-    setWeatherIcon(weatherIcons.snow);
-    return;
+    return weatherIcons.snow;
    case code >= 80 && code <= 82:
-    setWeatherIcon(weatherIcons.rainShowers);
-    return;
+    return weatherIcons.rainShowers;
    case code >= 85 && code <= 86:
-    setWeatherIcon(weatherIcons.snowShowers);
-    return;
+    return weatherIcons.snowShowers;
    case code === 95:
-    setWeatherIcon(weatherIcons.thunderstorm);
-    return;
+    return weatherIcons.thunderstorm;
    case code >= 96 && code <= 99:
-    setWeatherIcon(weatherIcons.thunderstormHail);
-    return;
+    return weatherIcons.thunderstormHail;
    default:
-    setWeatherIcon(null);
-    return;
+    return null;
   }
  };
 
- return { weatherIcon, handleWeatherIconChange };
+ return { getWeatherIcon };
 };

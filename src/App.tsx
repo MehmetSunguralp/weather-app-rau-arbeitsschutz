@@ -4,6 +4,7 @@ import type { WeatherResponse } from './types/types';
 import { Backdrop, Box, CircularProgress } from '@mui/material';
 import { useBackground } from './hooks/useBackground';
 import { Hero } from './components/Hero';
+import { WeatherCards } from './components/WeatherCards';
 
 export const App = () => {
  const [weatherInfo, setWeatherInfo] = useState<WeatherResponse | null>(null);
@@ -22,7 +23,7 @@ export const App = () => {
     <CircularProgress size={100} />
    </Backdrop>
    <Box
-    className="w-full max-w-[1280px] mx-auto flex flex-col justify-center items-center min-h-screen"
+    className="w-full max-w-[1400px] mx-auto flex flex-col justify-center items-center min-h-screen"
     sx={{
      backgroundColor: 'rgba(0, 0, 0, 0.6)',
      boxShadow: 3,
@@ -31,6 +32,7 @@ export const App = () => {
    >
     <SearchBox setWeatherInfo={setWeatherInfo} setIsLoading={setIsLoading} />
     <Hero weatherInfo={weatherInfo} />
+    {weatherInfo && <WeatherCards weatherInfo={weatherInfo} />}
    </Box>
   </Box>
  );
