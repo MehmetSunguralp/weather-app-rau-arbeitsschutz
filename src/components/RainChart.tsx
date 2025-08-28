@@ -1,14 +1,22 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { LineChart } from '@mui/x-charts';
-import { Box, Button } from '@mui/material';
+import { Box } from '@mui/material';
 import type { WeatherResponse } from '../types/types';
 
-export const RainChart = ({ weatherInfo }: { weatherInfo: WeatherResponse }) => {
- const [selectedDayIndex, setSelectedDayIndex] = useState(0);
+interface RainChartProps {
+ weatherInfo: WeatherResponse;
+ selectedDayIndex: number;
+}
+
+export const RainChart: React.FC<RainChartProps> = ({ weatherInfo, selectedDayIndex }) => {
  const [hours, setHours] = useState<string[]>([]);
  const [rainData, setRainData] = useState<number[]>([]);
+ const [currentWeatherInfo, setCurrentWeatherInfo] = useState<WeatherResponse>(weatherInfo);
 
  useEffect(() => {
+  if (weatherInfo !== currentWeatherInfo) {
+   setCurrentWeatherInfo(weatherInfo);
+  }
   const day = weatherInfo.daily.time[selectedDayIndex];
   const hourlyTimes = weatherInfo.hourly.time
    .map((t, i) => ({ t, rain: weatherInfo.hourly.precipitation[i] }))
@@ -24,9 +32,36 @@ export const RainChart = ({ weatherInfo }: { weatherInfo: WeatherResponse }) => 
   setRainData(hourlyRainPercentage);
  }, [selectedDayIndex, weatherInfo]);
 
+ const customChartStyles: object = {
+  '& .MuiChartsAxis-line': {
+   stroke: '#FFFFFF !important',
+   opacity: '0.2',
+  },
+  '& .MuiChartsLabel-root': {
+   color: '#FFFFFF !important',
+   fontSize: '16px !important',
+  },
+  '& .MuiChartsAxis-tick': {
+   display: 'none !important',
+  },
+  '& .MuiChartsAxis-tickLabel': {
+   fill: '#FFFFFF !important',
+   fontSize: '12px !important',
+  },
+  '& .MuiChartsLegend-label': {
+   fill: '#FFFFFF !important',
+  },
+  '& .MuiChartsLabelMark-fill': {
+   fill: '#0BAEFF !important',
+  },
+  '& .MuiLineElement-root': {
+   stroke: '#0BAEFF !important',
+  },
+ };
+
  return (
   <Box
-   className="shadow-[inset_0_2px_4px_rgba(0,0,0,0.2)] p-4 rounded-xl mt-4"
+   className="shadow-[inset_0_2px_4px_rgba(0,0,0,0.2)] p-4 rounded-xl mt-4  max-w-[1200px] w-full"
    sx={{
     backgroundColor: 'rgba(0, 0, 0, 0.2)',
    }}
@@ -35,9 +70,11 @@ export const RainChart = ({ weatherInfo }: { weatherInfo: WeatherResponse }) => 
     series={[
      {
       data: rainData,
-      label: 'Rainfall (%)',
+      label: 'Fällung (%)',
       showMark: false,
-      color: '#0BAEFF',
+      color: 'rgba(11, 174, 255, 0.2)',
+      area: true,
+      baseline: 0,
      },
     ]}
     xAxis={[
@@ -46,42 +83,9 @@ export const RainChart = ({ weatherInfo }: { weatherInfo: WeatherResponse }) => 
       scaleType: 'point',
      },
     ]}
-    height={140}
-    sx={{
-     '& .MuiChartsAxis-line': {
-      stroke: '#FFFFFF',
-      opacity: '0.5',
-     },
-     '& .MuiChartsAxis-tick': {
-      display: 'none',
-     },
-     '& .MuiChartsAxis-tickLabel': {
-      fill: '#FFFFFF',
-      fontSize: '12px',
-     },
-     '& .MuiChartsLegend-label': {
-      fill: '#FFFFFF',
-     },
-     '& .MuiChartsLabelMark-fill': {
-      fill: '#0BAEFF',
-     },
-     '& .MuiLineElement-root': {
-      stroke: '#0BAEFF',
-     },
-    }}
+    height={160}
+    sx={customChartStyles}
    />
-
-   <Box display="flex" gap={1}>
-    {weatherInfo.daily.time.map((day, idx) => (
-     <Button
-      key={day}
-      variant={idx === selectedDayIndex ? 'contained' : 'outlined'}
-      onClick={() => setSelectedDayIndex(idx)}
-     >
-      {day}
-     </Button>
-    ))}
-   </Box>
   </Box>
  );
 };

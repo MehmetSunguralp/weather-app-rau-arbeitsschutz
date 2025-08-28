@@ -10,6 +10,8 @@ import { RainChart } from './components/RainChart';
 export const App = () => {
  const [weatherInfo, setWeatherInfo] = useState<WeatherResponse | null>(null);
  const [isLoading, setIsLoading] = useState<boolean>(false);
+ const [selectedDayIndex, setSelectedDayIndex] = useState(0); // permanent selection
+ const [hoverDayIndex, setHoverDayIndex] = useState<number | null>(null); // temporary hover
 
  const { bgImage, handleBgChange } = useBackground();
 
@@ -32,8 +34,20 @@ export const App = () => {
    >
     <SearchBox setWeatherInfo={setWeatherInfo} setIsLoading={setIsLoading} />
     <Hero weatherInfo={weatherInfo} />
-    {weatherInfo && <WeatherCards weatherInfo={weatherInfo} />}
-    {weatherInfo && <RainChart weatherInfo={weatherInfo} />}
+    {weatherInfo && (
+     <WeatherCards
+      weatherInfo={weatherInfo}
+      selectedDayIndex={selectedDayIndex}
+      setSelectedDayIndex={setSelectedDayIndex}
+      setHoverDayIndex={setHoverDayIndex}
+     />
+    )}
+    {weatherInfo && (
+     <RainChart
+      weatherInfo={weatherInfo}
+      selectedDayIndex={hoverDayIndex ?? selectedDayIndex} // use hover if exists
+     />
+    )}
    </Box>
   </Box>
  );

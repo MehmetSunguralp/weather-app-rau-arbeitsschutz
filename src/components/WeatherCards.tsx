@@ -1,33 +1,35 @@
 import { useWeatherIcon } from '../hooks/useWeatherIcon';
 import { useWeatherCondition } from '../hooks/useWeatherCondition';
 import type { WeatherResponse } from '../types/types';
+import { formatDate } from '../utils/commonFunctions';
 import { Box, Stack, Typography } from '@mui/material';
+import type React from 'react';
 
-export const WeatherCards = ({ weatherInfo }: { weatherInfo: WeatherResponse }) => {
+interface WeatherCardsProps {
+ weatherInfo: WeatherResponse;
+ selectedDayIndex: number;
+ setSelectedDayIndex: (idx: number) => void;
+ setHoverDayIndex: (idx: number | null) => void;
+}
+
+export const WeatherCards: React.FC<WeatherCardsProps> = ({
+ weatherInfo,
+ selectedDayIndex,
+ setSelectedDayIndex,
+ setHoverDayIndex,
+}) => {
  const { getWeatherIcon } = useWeatherIcon();
  const { getWeatherCondition } = useWeatherCondition();
 
- const formatDate = (isoDate: string) => {
-  const date = new Date(isoDate);
-  const parts = new Intl.DateTimeFormat('de-DE', {
-   weekday: 'long',
-   day: 'numeric',
-  }).formatToParts(date);
-
-  const weekday = parts.find((p) => p.type === 'weekday')?.value ?? '';
-  const day = parts.find((p) => p.type === 'day')?.value ?? '';
-
-  return `${weekday} ${day}`;
- };
-
  return (
-  <Stack direction="row" spacing={2} flexWrap="wrap" className="mt-4">
+  <Stack direction="row" spacing={2} flexWrap="wrap" className="mt-4 max-w-[1200px] w-full">
    {weatherInfo.daily.time.slice(1).map((date, i) => {
     const icon = getWeatherIcon(weatherInfo.daily.weathercode[i]);
     const condition = getWeatherCondition(weatherInfo.daily.weathercode[i]);
 
     return (
      <Box
+      className="shadow-[inset_0_2px_4px_rgba(0,0,0,0.2)]"
       key={date}
       sx={{
        borderRadius: 2,
@@ -35,9 +37,12 @@ export const WeatherCards = ({ weatherInfo }: { weatherInfo: WeatherResponse }) 
        minWidth: 160,
        flex: '1 1 160px',
        textAlign: 'center',
-       backgroundColor: 'rgba(0, 0, 0, 0.2)',
+       backgroundColor: i === selectedDayIndex ? 'rgba(11,174,255,0.2)' : 'rgba(0, 0, 0, 0.2)',
+       cursor: 'pointer',
       }}
-      className="shadow-[inset_0_2px_4px_rgba(0,0,0,0.2)]"
+      onMouseEnter={() => setHoverDayIndex(i)}
+      onMouseLeave={() => setHoverDayIndex(null)}
+      onClick={() => setSelectedDayIndex(i)}
      >
       <Stack alignItems="center">
        <Typography variant="subtitle1" fontWeight={600}>
