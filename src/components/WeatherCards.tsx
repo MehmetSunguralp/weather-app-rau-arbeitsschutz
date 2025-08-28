@@ -39,7 +39,7 @@ export const WeatherCards = ({ weatherInfo }: { weatherInfo: WeatherResponse }) 
       }}
       className="shadow-[inset_0_2px_4px_rgba(0,0,0,0.2)]"
      >
-      <Stack spacing={1} alignItems="center">
+      <Stack alignItems="center">
        <Typography variant="subtitle1" fontWeight={600}>
         {formatDate(date)}
        </Typography>
@@ -49,7 +49,7 @@ export const WeatherCards = ({ weatherInfo }: { weatherInfo: WeatherResponse }) 
         <Typography variant="h6" fontWeight={700}>
          {weatherInfo.daily.temperature_2m_max[i]}°
         </Typography>
-        <Typography className="opacity-70" variant="body2">
+        <Typography className="opacity-70" variant="body1">
          {weatherInfo.daily.temperature_2m_min[i]}°
         </Typography>
        </Stack>

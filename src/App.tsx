@@ -5,6 +5,7 @@ import { Backdrop, Box, CircularProgress } from '@mui/material';
 import { useBackground } from './hooks/useBackground';
 import { Hero } from './components/Hero';
 import { WeatherCards } from './components/WeatherCards';
+import { RainChart } from './components/RainChart';
 
 export const App = () => {
  const [weatherInfo, setWeatherInfo] = useState<WeatherResponse | null>(null);
@@ -14,7 +15,6 @@ export const App = () => {
 
  useEffect(() => {
   if (weatherInfo?.current.weather_code) handleBgChange(weatherInfo?.current.weather_code);
-  console.log(weatherInfo);
  }, [weatherInfo, isLoading]);
 
  return (
@@ -33,6 +33,7 @@ export const App = () => {
     <SearchBox setWeatherInfo={setWeatherInfo} setIsLoading={setIsLoading} />
     <Hero weatherInfo={weatherInfo} />
     {weatherInfo && <WeatherCards weatherInfo={weatherInfo} />}
+    {weatherInfo && <RainChart weatherInfo={weatherInfo} />}
    </Box>
   </Box>
  );

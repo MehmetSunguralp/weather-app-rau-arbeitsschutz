@@ -57,6 +57,7 @@ export interface HourlyWeather {
  time: string[];
  temperature_2m: number[];
  weather_code: number[];
+ precipitation: number[];
 }
 export interface DailyWeather {
  time: string[];
