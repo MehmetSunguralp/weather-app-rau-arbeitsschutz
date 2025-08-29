@@ -36,6 +36,7 @@ export interface ApiResult<T> {
 export type SearchBoxProps = {
  setWeatherInfo: Dispatch<SetStateAction<WeatherResponse | null>>;
  setIsLoading: Dispatch<SetStateAction<boolean>>;
+ setSelectedDayIndex: Dispatch<SetStateAction<number>>;
 };
 export interface WeatherUnits {
  time: string;

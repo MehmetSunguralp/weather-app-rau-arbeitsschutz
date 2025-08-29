@@ -10,8 +10,8 @@ import { RainChart } from './components/RainChart';
 export const App = () => {
  const [weatherInfo, setWeatherInfo] = useState<WeatherResponse | null>(null);
  const [isLoading, setIsLoading] = useState<boolean>(false);
- const [selectedDayIndex, setSelectedDayIndex] = useState(0); // permanent selection
- const [hoverDayIndex, setHoverDayIndex] = useState<number | null>(null); // temporary hover
+ const [selectedDayIndex, setSelectedDayIndex] = useState(0);
+ const [hoverDayIndex, setHoverDayIndex] = useState<number | null>(null);
 
  const { bgImage, handleBgChange } = useBackground();
 
@@ -32,22 +32,18 @@ export const App = () => {
      p: 4,
     }}
    >
-    <SearchBox setWeatherInfo={setWeatherInfo} setIsLoading={setIsLoading} />
+    <SearchBox setWeatherInfo={setWeatherInfo} setIsLoading={setIsLoading} setSelectedDayIndex={setSelectedDayIndex} />
     <Hero weatherInfo={weatherInfo} />
     {weatherInfo && (
      <WeatherCards
       weatherInfo={weatherInfo}
       selectedDayIndex={selectedDayIndex}
       setSelectedDayIndex={setSelectedDayIndex}
+      hoverDayIndex={hoverDayIndex}
       setHoverDayIndex={setHoverDayIndex}
      />
     )}
-    {weatherInfo && (
-     <RainChart
-      weatherInfo={weatherInfo}
-      selectedDayIndex={hoverDayIndex ?? selectedDayIndex} // use hover if exists
-     />
-    )}
+    {weatherInfo && <RainChart weatherInfo={weatherInfo} selectedDayIndex={hoverDayIndex ?? selectedDayIndex} />}
    </Box>
   </Box>
  );

@@ -1,4 +1,3 @@
-// src/api/apiCalls.ts
 import axios from 'axios';
 import type { ApiResult, WeatherResponse, PlaceDetail } from '../types/types';
 

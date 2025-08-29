@@ -4,7 +4,7 @@ import type { PlaceDetail, SearchBoxProps } from '../types/types';
 import { Box, TextField, List, ListItem, ListItemButton, Paper, InputAdornment } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 
-export const SearchBox = ({ setWeatherInfo, setIsLoading }: SearchBoxProps) => {
+export const SearchBox = ({ setWeatherInfo, setIsLoading, setSelectedDayIndex }: SearchBoxProps) => {
  const [query, setQuery] = useState<string>('');
  const [places, setPlaces] = useState<PlaceDetail[]>([]);
  const [currentPlace, setCurrentPlace] = useState<string>('');
@@ -61,6 +61,7 @@ export const SearchBox = ({ setWeatherInfo, setIsLoading }: SearchBoxProps) => {
    };
    setWeatherInfo(enrichedWeatherInfo);
    setIsLoading(false);
+   setSelectedDayIndex(0);
   } else {
    setIsLoading(false);
   }

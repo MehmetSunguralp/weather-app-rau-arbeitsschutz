@@ -8,6 +8,7 @@ export const Hero = ({ weatherInfo }: { weatherInfo: WeatherResponse | null }) =
  const [unit, setUnit] = useState<'celcius' | 'fahrenheit'>('celcius');
  const [weatherIcon, setWeatherIcon] = useState<string | null>(null);
  const [weatherCondition, setWeatherCondition] = useState<string | null>(null);
+ const [lastUpdate, setLastUpdate] = useState<string | null>(null);
  const { getWeatherIcon } = useWeatherIcon();
  const { getWeatherCondition } = useWeatherCondition();
 
@@ -15,7 +16,14 @@ export const Hero = ({ weatherInfo }: { weatherInfo: WeatherResponse | null }) =
   if (weatherInfo) {
    setWeatherIcon(getWeatherIcon(weatherInfo.current.weather_code));
    setWeatherCondition(getWeatherCondition(weatherInfo.current.weather_code));
+   const updateTime = new Date(weatherInfo.current.time);
+   const formattedUpdate = updateTime.toLocaleString('de-DE', {
+    hour: '2-digit',
+    minute: '2-digit',
+   });
+   setLastUpdate(formattedUpdate);
   }
+  console.log(weatherInfo?.daily.time[0]);
  }, [weatherInfo]);
 
  return (
@@ -51,6 +59,9 @@ export const Hero = ({ weatherInfo }: { weatherInfo: WeatherResponse | null }) =
      }%`}
     </Typography>
    )}
+   <Typography variant="body2" className="opacity-70 mb-2">
+    Letztes Update: {lastUpdate}
+   </Typography>
   </Box>
  );
 };
