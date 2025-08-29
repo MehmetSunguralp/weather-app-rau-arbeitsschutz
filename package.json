@@ -6,7 +6,7 @@
  "homepage": "https://mehmetsunguralp.github.io/weather-app-rau-arbeitsschutz",
  "scripts": {
   "dev": "vite",
-  "build": "tsc -b && vite build",
+  "build": "tsc -b ; vite build",
   "lint": "eslint .",
   "preview": "vite preview",
   "deploy": "gh-pages -d dist"

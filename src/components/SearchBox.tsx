@@ -98,7 +98,7 @@ export const SearchBox = ({ setWeatherInfo, setIsLoading, setSelectedDayIndex, u
         borderColor: 'transparent',
        },
       },
-      '&.Mui-hover': {
+      '&.Mui-hovered': {
        '& .MuiOutlinedInput-notchedOutline': {
         borderColor: 'transparent',
        },
