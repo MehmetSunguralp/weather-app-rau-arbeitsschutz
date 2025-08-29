@@ -5,6 +5,7 @@ import path from 'path';
 // https://vite.dev/config/
 export default defineConfig({
  plugins: [react()],
+ base: '/weather-app-rau-arbeitsschutz/',
  resolve: {
   alias: {
    '@': path.resolve(__dirname, './src'),
