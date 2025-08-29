@@ -12,11 +12,13 @@ export const App = () => {
  const [isLoading, setIsLoading] = useState<boolean>(false);
  const [selectedDayIndex, setSelectedDayIndex] = useState(0);
  const [hoverDayIndex, setHoverDayIndex] = useState<number | null>(null);
+ const [unit, setUnit] = useState<string>('celsius');
 
  const { bgImage, handleBgChange } = useBackground();
 
  useEffect(() => {
   if (weatherInfo?.current.weather_code) handleBgChange(weatherInfo?.current.weather_code);
+  console.log(weatherInfo);
  }, [weatherInfo, isLoading]);
 
  return (
@@ -32,8 +34,19 @@ export const App = () => {
      p: 4,
     }}
    >
-    <SearchBox setWeatherInfo={setWeatherInfo} setIsLoading={setIsLoading} setSelectedDayIndex={setSelectedDayIndex} />
-    <Hero weatherInfo={weatherInfo} />
+    <SearchBox
+     setWeatherInfo={setWeatherInfo}
+     setIsLoading={setIsLoading}
+     setSelectedDayIndex={setSelectedDayIndex}
+     unit={unit}
+    />
+    <Hero
+     weatherInfo={weatherInfo}
+     setIsLoading={setIsLoading}
+     setWeatherInfo={setWeatherInfo}
+     unit={unit}
+     setUnit={setUnit}
+    />
     {weatherInfo && (
      <WeatherCards
       weatherInfo={weatherInfo}

@@ -40,7 +40,11 @@ export const getPlaceByKeyword = async (keyword: string): Promise<ApiResult<Plac
  return resultData;
 };
 
-export const getWeatherByCoords = async (lat: number, lon: number): Promise<ApiResult<WeatherResponse>> => {
+export const getWeatherByCoords = async (
+ lat: number,
+ lon: number,
+ unit: string
+): Promise<ApiResult<WeatherResponse>> => {
  const resultData: ApiResult<WeatherResponse> = {
   state: '',
   data: null,
@@ -55,6 +59,7 @@ export const getWeatherByCoords = async (lat: number, lon: number): Promise<ApiR
     current: 'temperature_2m,weather_code,is_day,wind_speed_10m,relative_humidity_2m',
     hourly: 'temperature_2m,weather_code,precipitation',
     daily: 'weathercode,temperature_2m_max,temperature_2m_min,precipitation_sum',
+    temperature_unit: unit,
    },
   });
 

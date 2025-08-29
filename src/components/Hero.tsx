@@ -1,11 +1,23 @@
 import { Box, Typography } from '@mui/material';
-import type { WeatherResponse } from '../types/types';
+import type { PlaceDetail, WeatherResponse } from '../types/types';
 import { useEffect, useState } from 'react';
 import { useWeatherIcon } from '../hooks/useWeatherIcon';
 import { useWeatherCondition } from '../hooks/useWeatherCondition';
+import { getWeatherByCoords } from '../api/apiCalls';
 
-export const Hero = ({ weatherInfo }: { weatherInfo: WeatherResponse | null }) => {
- const [unit, setUnit] = useState<'celcius' | 'fahrenheit'>('celcius');
+export const Hero = ({
+ weatherInfo,
+ unit,
+ setUnit,
+ setIsLoading,
+ setWeatherInfo,
+}: {
+ weatherInfo: WeatherResponse | null;
+ unit: string;
+ setUnit: (idx: string) => void;
+ setIsLoading: (idx: boolean) => void;
+ setWeatherInfo: (idx: WeatherResponse) => void;
+}) => {
  const [weatherIcon, setWeatherIcon] = useState<string | null>(null);
  const [weatherCondition, setWeatherCondition] = useState<string | null>(null);
  const [lastUpdate, setLastUpdate] = useState<string | null>(null);
@@ -23,8 +35,28 @@ export const Hero = ({ weatherInfo }: { weatherInfo: WeatherResponse | null }) =
    });
    setLastUpdate(formattedUpdate);
   }
-  console.log(weatherInfo?.daily.time[0]);
  }, [weatherInfo]);
+
+ const handleUnitChange = async () => {
+  if (weatherInfo) {
+   setIsLoading(true);
+   const weatherResponse = await getWeatherByCoords(weatherInfo.latitude, weatherInfo.longitude, unit);
+   if (weatherResponse.state === 'success' && weatherResponse.data) {
+    setWeatherInfo({
+     ...weatherInfo,
+     ...weatherResponse.data,
+    });
+
+    setIsLoading(false);
+   } else {
+    setIsLoading(false);
+   }
+  }
+ };
+
+ useEffect(() => {
+  handleUnitChange();
+ }, [unit]);
 
  return (
   <Box
@@ -37,11 +69,21 @@ export const Hero = ({ weatherInfo }: { weatherInfo: WeatherResponse | null }) =
      <Typography variant="h1">{weatherInfo?.current.temperature_2m}&deg;</Typography>
 
      <Box component={'span'} className="flex flex-col justify-center">
-      <Typography variant="h5" sx={{ opacity: unit === 'fahrenheit' ? 0.4 : 1 }}>
+      <Typography
+       className="cursor-pointer"
+       variant="h5"
+       sx={{ opacity: unit === 'fahrenheit' ? 0.4 : 1 }}
+       onClick={() => setUnit('celsius')}
+      >
        C
       </Typography>
 
-      <Typography variant="h5" sx={{ opacity: unit === 'celcius' ? 0.4 : 1 }}>
+      <Typography
+       className="cursor-pointer"
+       variant="h5"
+       sx={{ opacity: unit === 'celsius' ? 0.4 : 1 }}
+       onClick={() => setUnit('fahrenheit')}
+      >
        F
       </Typography>
      </Box>

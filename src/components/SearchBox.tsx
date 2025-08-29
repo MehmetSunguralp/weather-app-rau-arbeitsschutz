@@ -4,7 +4,7 @@ import type { PlaceDetail, SearchBoxProps } from '../types/types';
 import { Box, TextField, List, ListItem, ListItemButton, Paper, InputAdornment } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 
-export const SearchBox = ({ setWeatherInfo, setIsLoading, setSelectedDayIndex }: SearchBoxProps) => {
+export const SearchBox = ({ setWeatherInfo, setIsLoading, setSelectedDayIndex, unit }: SearchBoxProps) => {
  const [query, setQuery] = useState<string>('');
  const [places, setPlaces] = useState<PlaceDetail[]>([]);
  const [currentPlace, setCurrentPlace] = useState<string>('');
@@ -15,7 +15,7 @@ export const SearchBox = ({ setWeatherInfo, setIsLoading, setSelectedDayIndex }:
    const { latitude, longitude } = position.coords;
    if (latitude && longitude) {
     setIsLoading(true);
-    const weatherResponse = await getWeatherByCoords(latitude, longitude);
+    const weatherResponse = await getWeatherByCoords(latitude, longitude, unit);
     if (weatherResponse.state == 'success') {
      setWeatherInfo(weatherResponse.data);
      setIsLoading(false);
@@ -53,7 +53,7 @@ export const SearchBox = ({ setWeatherInfo, setIsLoading, setSelectedDayIndex }:
 
  const handleSelectPlace = async (place: PlaceDetail) => {
   setIsLoading(true);
-  const weatherResponse = await getWeatherByCoords(place.latitude, place.longitude);
+  const weatherResponse = await getWeatherByCoords(place.latitude, place.longitude, unit);
   if (weatherResponse.state === 'success' && weatherResponse.data) {
    const enrichedWeatherInfo = {
     ...weatherResponse.data,
