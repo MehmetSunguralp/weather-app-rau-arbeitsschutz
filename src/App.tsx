@@ -29,7 +29,7 @@ export const App = () => {
    <Box
     className="w-full max-w-[1400px] mx-auto flex flex-col justify-center items-center min-h-screen"
     sx={{
-     backgroundColor: 'rgba(0, 0, 0, 0.6)',
+     backgroundColor: 'rgba(0, 0, 0, 0.7)',
      boxShadow: 3,
      p: 4,
     }}

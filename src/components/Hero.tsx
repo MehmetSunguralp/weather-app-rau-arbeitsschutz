@@ -90,7 +90,7 @@ export const Hero = ({
     </Box>
 
     <Box className="flex flex-col justify-between items-center">
-     {weatherIcon && <Box component={'img'} src={weatherIcon} className="w-full max-w-[120px]" />}
+     {weatherIcon && <Box component={'img'} src={weatherIcon} className="w-full max-w-[120px] h-[120px]" />}
      {weatherCondition && <Typography variant="h5">{weatherCondition}</Typography>}
     </Box>
    </Box>
