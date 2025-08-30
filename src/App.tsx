@@ -17,8 +17,9 @@ export const App = () => {
  const { bgImage, handleBgChange } = useBackground();
 
  useEffect(() => {
-  if (weatherInfo?.current.weather_code) handleBgChange(weatherInfo?.current.weather_code);
-  console.log(weatherInfo);
+  if (weatherInfo?.current.weather_code !== undefined) {
+   handleBgChange(weatherInfo.current.weather_code, weatherInfo.current.is_day);
+  }
  }, [weatherInfo, isLoading]);
 
  return (
@@ -37,7 +38,7 @@ export const App = () => {
    </Backdrop>
 
    <Box
-    className="w-full max-w-[1400px] mx-auto flex flex-col justify-center items-center min-h-screen px-2 sm:px-4"
+    className="w-full mx-auto flex flex-col justify-center items-center min-h-screen px-2 sm:px-4"
     sx={{
      backgroundColor: 'rgba(0, 0, 0, 0.7)',
      backdropFilter: 'blur(3px)',

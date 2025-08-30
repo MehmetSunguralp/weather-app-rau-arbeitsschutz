@@ -30,6 +30,7 @@ export const RainChart: React.FC<RainChartProps> = ({ weatherInfo, selectedDayIn
 
   setHours(hourLabels);
   setRainData(hourlyRainPercentage);
+  console.log(rainData);
  }, [selectedDayIndex, weatherInfo]);
 
  const customChartStyles: object = {

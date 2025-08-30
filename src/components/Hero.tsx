@@ -1,5 +1,5 @@
 import { Box, Typography } from '@mui/material';
-import type { PlaceDetail, WeatherResponse } from '../types/types';
+import type { WeatherResponse } from '../types/types';
 import { useEffect, useState } from 'react';
 import { useWeatherIcon } from '../hooks/useWeatherIcon';
 import { useWeatherCondition } from '../hooks/useWeatherCondition';
