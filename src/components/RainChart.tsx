@@ -61,16 +61,20 @@ export const RainChart: React.FC<RainChartProps> = ({ weatherInfo, selectedDayIn
 
  return (
   <Box
-   className="shadow-[inset_0_2px_4px_rgba(0,0,0,0.2)] p-4 rounded-xl mt-4  max-w-[1200px] w-full"
+   className="shadow-[inset_0_2px_4px_rgba(0,0,0,0.2)] p-2 sm:p-4 rounded-xl mt-4 max-w-[1200px] w-full"
    sx={{
     backgroundColor: 'rgba(0, 0, 0, 0.2)',
+    minWidth: 0,
+    width: '100%',
+    maxWidth: { xs: '100%', sm: '1200px' },
+    overflowX: 'auto',
    }}
   >
    <LineChart
     series={[
      {
       data: rainData,
-      label: 'Fällung (%)',
+      label: 'Niederschlag  (%)',
       showMark: false,
       color: 'rgba(11, 174, 255, 0.2)',
       area: true,
@@ -81,10 +85,24 @@ export const RainChart: React.FC<RainChartProps> = ({ weatherInfo, selectedDayIn
      {
       data: hours,
       scaleType: 'point',
+      tickLabelStyle: { fontSize: 10 },
      },
     ]}
-    height={160}
-    sx={customChartStyles}
+    height={120}
+    width={undefined}
+    sx={{
+     ...customChartStyles,
+     '.MuiChartsLabel-root': {
+      color: '#FFFFFF !important',
+      fontSize: { xs: '12px !important', sm: '16px !important' },
+     },
+     '.MuiChartsAxis-tickLabel': {
+      fill: '#FFFFFF !important',
+      fontSize: { xs: '10px !important', sm: '12px !important' },
+     },
+    }}
+    margin={{ left: 10, right: 10, top: 10, bottom: 10 }}
+    grid={{ vertical: true, horizontal: true }}
    />
   </Box>
  );

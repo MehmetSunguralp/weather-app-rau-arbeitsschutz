@@ -7,24 +7,7 @@ import SearchIcon from '@mui/icons-material/Search';
 export const SearchBox = ({ setWeatherInfo, setIsLoading, setSelectedDayIndex, unit }: SearchBoxProps) => {
  const [query, setQuery] = useState<string>('');
  const [places, setPlaces] = useState<PlaceDetail[]>([]);
- const [currentPlace, setCurrentPlace] = useState<string>('');
  const containerRef = useRef<HTMLDivElement>(null);
-
- useEffect(() => {
-  navigator.geolocation.getCurrentPosition(async (position) => {
-   const { latitude, longitude } = position.coords;
-   if (latitude && longitude) {
-    setIsLoading(true);
-    const weatherResponse = await getWeatherByCoords(latitude, longitude, unit);
-    if (weatherResponse.state == 'success') {
-     setWeatherInfo(weatherResponse.data);
-     setIsLoading(false);
-    }
-   } else {
-    setIsLoading(false);
-   }
-  });
- }, []);
 
  useEffect(() => {
   const timeout = setTimeout(fetchPlaces, 300);
@@ -67,7 +50,6 @@ export const SearchBox = ({ setWeatherInfo, setIsLoading, setSelectedDayIndex, u
   }
   setPlaces([]);
   setQuery('');
-  setCurrentPlace(place.name);
  };
 
  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -76,7 +58,15 @@ export const SearchBox = ({ setWeatherInfo, setIsLoading, setSelectedDayIndex, u
  };
 
  return (
-  <Box ref={containerRef} className="flex flex-col items-center relative w-full max-w-md z-10">
+  <Box
+   ref={containerRef}
+   className="flex flex-col items-center relative w-full max-w-md z-10"
+   sx={{
+    width: '100%',
+    maxWidth: { xs: '100%', sm: 400 },
+    minWidth: { xs: '0', sm: '260px' },
+   }}
+  >
    <TextField
     placeholder={'Stadt suchen...'}
     value={query}
@@ -87,9 +77,11 @@ export const SearchBox = ({ setWeatherInfo, setIsLoading, setSelectedDayIndex, u
     sx={{
      borderRadius: '50px',
      backgroundColor: 'rgba(0, 0, 0, 0.4)',
+     fontSize: { xs: '0.95rem', sm: '1rem' },
      '& .MuiOutlinedInput-root': {
       borderRadius: '50px',
       color: 'rgba(255,255,255,0.9)',
+      fontSize: { xs: '0.95rem', sm: '1rem' },
       '& .MuiOutlinedInput-notchedOutline': {
        borderColor: 'transparent',
       },
@@ -127,6 +119,7 @@ export const SearchBox = ({ setWeatherInfo, setIsLoading, setSelectedDayIndex, u
       overflowY: 'auto',
       zIndex: 10,
       borderRadius: '8px',
+      fontSize: { xs: '0.95rem', sm: '1rem' },
      }}
      elevation={4}
     >
@@ -134,7 +127,9 @@ export const SearchBox = ({ setWeatherInfo, setIsLoading, setSelectedDayIndex, u
       {places.map((place) => (
        <ListItem key={place.id} disablePadding>
         <ListItemButton onClick={() => handleSelectPlace(place)}>
-         {place.name}, {place.admin1}, {place.country}
+         <span className="truncate w-full block">
+          {place.name}, {place.admin1}, {place.country}
+         </span>
         </ListItemButton>
        </ListItem>
       ))}
