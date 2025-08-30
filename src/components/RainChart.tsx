@@ -68,6 +68,7 @@ export const RainChart: React.FC<RainChartProps> = ({ weatherInfo, selectedDayIn
     width: '100%',
     maxWidth: { xs: '100%', sm: '1200px' },
     overflowX: 'auto',
+    marginBottom: { xs: 6, sm: 4, md: 0 },
    }}
   >
    <LineChart
@@ -88,7 +89,7 @@ export const RainChart: React.FC<RainChartProps> = ({ weatherInfo, selectedDayIn
       tickLabelStyle: { fontSize: 10 },
      },
     ]}
-    height={120}
+    height={140}
     width={undefined}
     sx={{
      ...customChartStyles,
@@ -101,7 +102,7 @@ export const RainChart: React.FC<RainChartProps> = ({ weatherInfo, selectedDayIn
       fontSize: { xs: '10px !important', sm: '12px !important' },
      },
     }}
-    margin={{ left: 10, right: 10, top: 10, bottom: 10 }}
+    margin={{ left: -20, right: 10, top: 10, bottom: 10 }}
     grid={{ vertical: true, horizontal: true }}
    />
   </Box>

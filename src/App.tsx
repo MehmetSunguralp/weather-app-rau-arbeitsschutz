@@ -46,12 +46,14 @@ export const App = () => {
      minHeight: { xs: '100vh', sm: '100vh' },
     }}
    >
-    <Box className="text-center mb-4 flex items-end gap-2 absolute right-6 bottom-0 opacity-70">
-     <Typography variant="h5" className="font-extrabold">
-      Wetter-App
-     </Typography>
+    <Box className="text-center mb-4 flex flex-wrap items-end gap-2 absolute right-6 bottom-0 opacity-70">
+     <Typography className="font-extrabold text-sm sm:text-base md:text-lg lg:text-xl">Wetter-App</Typography>
 
-     <Link href="https://github.com/MehmetSunguralp" target="_blank" variant="h6">
+     <Link
+      href="https://github.com/MehmetSunguralp"
+      target="_blank"
+      className="text-xs sm:text-sm md:text-base lg:text-lg"
+     >
       von Mehmet Sunguralp
      </Link>
     </Box>
@@ -70,6 +72,10 @@ export const App = () => {
       setWeatherInfo={setWeatherInfo}
       unit={unit}
       setUnit={setUnit}
+      selectedDayIndex={selectedDayIndex}
+      setSelectedDayIndex={setSelectedDayIndex}
+      hoverDayIndex={hoverDayIndex}
+      setHoverDayIndex={setHoverDayIndex}
      />
     )}
 
@@ -80,6 +86,7 @@ export const App = () => {
       setSelectedDayIndex={setSelectedDayIndex}
       hoverDayIndex={hoverDayIndex}
       setHoverDayIndex={setHoverDayIndex}
+      showToday={false}
      />
     )}
 

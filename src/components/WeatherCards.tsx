@@ -11,6 +11,7 @@ interface WeatherCardsProps {
  setSelectedDayIndex: (idx: number) => void;
  setHoverDayIndex: (idx: number | null) => void;
  hoverDayIndex: number | null;
+ showToday?: boolean;
 }
 
 export const WeatherCards: React.FC<WeatherCardsProps> = ({
@@ -38,12 +39,13 @@ export const WeatherCards: React.FC<WeatherCardsProps> = ({
     alignItems: 'stretch',
    }}
   >
-   {weatherInfo.daily.time.slice(1).map((date, i) => {
-    const icon = getWeatherIcon(weatherInfo.daily.weathercode[i]);
-    const condition = getWeatherCondition(weatherInfo.daily.weathercode[i]);
+   {weatherInfo.daily.time.slice(1, 7).map((date, i) => {
+    const realIndex = i + 1;
+    const icon = getWeatherIcon(weatherInfo.daily.weathercode[realIndex]);
+    const condition = getWeatherCondition(weatherInfo.daily.weathercode[realIndex]);
 
     return (
-     <Tooltip title="Regen" key={date} arrow>
+     <Tooltip title="Zeige Regenwahrscheinlichkeit" key={date} arrow>
       <Box
        className="shadow-[inset_0_2px_4px_rgba(0,0,0,0.2)]"
        sx={{
@@ -55,9 +57,9 @@ export const WeatherCards: React.FC<WeatherCardsProps> = ({
         textAlign: 'center',
         cursor: 'pointer',
         backgroundColor:
-         i === selectedDayIndex
+         realIndex === selectedDayIndex
           ? 'rgba(11,174,255,0.2)'
-          : hoverDayIndex === i
+          : hoverDayIndex === realIndex
           ? 'rgba(11,174,255,0.1)'
           : 'rgba(0, 0, 0, 0.2)',
         transition: 'background-color 0.2s ease',
@@ -68,9 +70,9 @@ export const WeatherCards: React.FC<WeatherCardsProps> = ({
         justifyContent: 'center',
         height: { md: '100%' },
        }}
-       onMouseEnter={() => setHoverDayIndex(i)}
+       onMouseEnter={() => setHoverDayIndex(realIndex)}
        onMouseLeave={() => setHoverDayIndex(null)}
-       onClick={() => setSelectedDayIndex(i)}
+       onClick={() => setSelectedDayIndex(realIndex)}
       >
        <Box component={'span'} style={{ fontWeight: 600, fontSize: '0.85rem', marginBottom: 2 }}>
         {formatDate(date)}
@@ -80,10 +82,10 @@ export const WeatherCards: React.FC<WeatherCardsProps> = ({
        )}
        <Stack direction="row" spacing={1} alignItems="baseline">
         <Box component={'span'} style={{ fontWeight: 700, fontSize: '1rem' }}>
-         {weatherInfo.daily.temperature_2m_max[i]}°
+         {weatherInfo.daily.temperature_2m_max[realIndex]}°
         </Box>
         <Box component={'span'} style={{ opacity: 0.7, fontSize: '0.9rem' }}>
-         {weatherInfo.daily.temperature_2m_min[i]}°
+         {weatherInfo.daily.temperature_2m_min[realIndex]}°
         </Box>
        </Stack>
        <span style={{ opacity: 0.7, fontSize: '0.8rem', marginTop: 2 }}>{condition}</span>

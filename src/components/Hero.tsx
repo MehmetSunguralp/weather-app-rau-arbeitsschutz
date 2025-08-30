@@ -11,12 +11,20 @@ export const Hero = ({
  setUnit,
  setIsLoading,
  setWeatherInfo,
+ selectedDayIndex,
+ setSelectedDayIndex,
+ hoverDayIndex,
+ setHoverDayIndex,
 }: {
  weatherInfo: WeatherResponse | null;
  unit: string;
  setUnit: (idx: string) => void;
  setIsLoading: (idx: boolean) => void;
  setWeatherInfo: (idx: WeatherResponse) => void;
+ selectedDayIndex: number;
+ setSelectedDayIndex: (idx: number) => void;
+ hoverDayIndex: number | null;
+ setHoverDayIndex: (idx: number | null) => void;
 }) => {
  const [weatherIcon, setWeatherIcon] = useState<string | null>(null);
  const [weatherCondition, setWeatherCondition] = useState<string | null>(null);
@@ -60,13 +68,22 @@ export const Hero = ({
 
  return (
   <Box
-   className="mt-4 flex flex-col text-center justify-center rounded-3xl px-4 sm:px-8 md:px-16 py-4 shadow-[inset_0_2px_4px_rgba(0,0,0,0.2)]"
+   className="mt-4 flex flex-col text-center justify-center rounded-3xl px-4 sm:px-8 md:px-16 py-4 shadow-[inset_0_2px_4px_rgba(0,0,0,0.2)] cursor-pointer"
    sx={{
-    backgroundColor: 'rgba(0, 0, 0, 0.2)',
+    backgroundColor:
+     hoverDayIndex === 0
+      ? 'rgba(11,174,255,0.1)'
+      : selectedDayIndex === 0
+      ? 'rgba(11,174,255,0.2)'
+      : 'rgba(0, 0, 0, 0.2)',
     width: { xs: '100%', sm: '90%', md: 'auto' },
     maxWidth: 600,
     marginX: 'auto',
+    transition: 'background-color 0.2s',
    }}
+   onClick={() => setSelectedDayIndex(0)}
+   onMouseEnter={() => setHoverDayIndex(0)}
+   onMouseLeave={() => setHoverDayIndex(null)}
   >
    <Typography variant="h5" sx={{ fontSize: { xs: '1.2rem', sm: '1.5rem', md: '2.125rem' } }}>
     {weatherInfo?.placeName}
