@@ -7,6 +7,12 @@ Open-Meteo: https://open-meteo.com/
 ## Tech Stack
 TypeScript, React.js, Tailwind, Material UI
 
+## Visual Assets
+Background Images: https://unsplash.com/
+
+Weather Icons: https://www.figma.com/design/dMkgSU7cZyf6M0G9yaDwsa/Weather-icons--Community
+
+
 
 Desktop             |  Tablet          |  Mobile  
 :-------------------------:|:-------------------------:|:-------------------------:
