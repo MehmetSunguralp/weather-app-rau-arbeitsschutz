@@ -1,3 +1,6 @@
+## Live Demo
+https://mehmetsunguralp.github.io/weather-app-rau-arbeitsschutz/
+
 ## Install & Run
 `npm install` → `npm run dev` or `yarn` → `yarn dev`
 
@@ -11,8 +14,6 @@ TypeScript, React.js, Tailwind, Material UI
 Background Images: https://unsplash.com/
 
 Weather Icons: https://www.figma.com/design/dMkgSU7cZyf6M0G9yaDwsa/Weather-icons--Community
-
-
 
 Desktop             |  Tablet          |  Mobile  
 :-------------------------:|:-------------------------:|:-------------------------:
